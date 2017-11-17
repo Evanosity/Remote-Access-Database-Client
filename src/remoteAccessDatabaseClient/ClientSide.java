@@ -17,6 +17,7 @@ import javax.swing.border.Border;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
@@ -45,6 +46,8 @@ public class ClientSide{
 	public JPanel table;
 	//Border
 	public Border black = BorderFactory.createLineBorder(Color.BLACK, 1);
+	//Image Icon
+	ImageIcon frameIcon = new ImageIcon("src\\remoteAccessDatabaseClient\\ClientIcon.png");
 
 	public void ClientSideLogin(){
 		//JFrame clientLogin
@@ -52,6 +55,7 @@ public class ClientSide{
 		clientLogin.setSize(553, 385);
 		clientLogin.setResizable(false);
 		clientLogin.setDefaultCloseOperation(clientLogin.EXIT_ON_CLOSE);
+		clientLogin.setIconImage(frameIcon.getImage());
 		
 		//Container c
 		Container c = new Container();
@@ -190,6 +194,7 @@ public class ClientSide{
 		clientFrame.setSize(1382, 784);
 		clientFrame.setVisible(true);
 		clientFrame.setDefaultCloseOperation(clientFrame.EXIT_ON_CLOSE);
+		clientFrame.setIconImage(frameIcon.getImage());
 		
 		//Container clientCon
 		Container clientCon = new Container();
