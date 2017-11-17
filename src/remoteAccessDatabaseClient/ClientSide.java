@@ -181,56 +181,58 @@ public class ClientSide{
 		
 	}
 	
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public void clientScreen() {
 		//JFrame clintFrame
-		JFrame clientFrame = new JFrame();
-		clientFrame.setSize(100, 100);
+		JFrame clientFrame = new JFrame("Client Window");
+		clientFrame.setSize(1382, 784);
 		clientFrame.setVisible(true);
 		clientFrame.setDefaultCloseOperation(clientFrame.EXIT_ON_CLOSE);
 		
 		//Container clientCon
 		Container clientCon = new Container();
 		clientCon.setLayout(null);
-		clientFrame.add(clientCon);
+		clientFrame.getContentPane().add(clientCon);
 		
 		//JButton logout
 		logout = new JButton("Logout");
-		logout.setSize(100,100);
-		logout.setLocation(0,0);
+		logout.setSize(92,32);
+		logout.setLocation(1260,354);
 		logout.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				ClientSideLogin();	
-				//System.out.println("Height: " + clientFrame.getHeight() + "  Width: " + clientFrame.getWidth());
 				clientFrame.dispose();
 			}
 			
 		});
 		
 		optionA = new JComboBox();
-		optionA.setSize(100,100);
-		optionA.setLocation(0,101);
+		optionA.setSize(190,37);
+		optionA.setLocation(40,196);
 		
 		
 		optionB = new JComboBox();
-		optionB.setSize(100,100);
-		optionB.setLocation(0,202);
+		optionB.setSize(190,37);
+		optionB.setLocation(280,196);
 		
 		
 		optionC = new JComboBox();
-		optionC.setSize(100,100);
-		optionC.setLocation(0,303);
+		optionC.setSize(190,37);
+		optionC.setLocation(520,196);
 		
 		
 		optionD = new JComboBox();
-		optionD.setSize(100,100);
-		optionD.setLocation(0,404);
+		optionD.setSize(190,37);
+		optionD.setLocation(760,196);
 		
 		
 		table = new JPanel();
-		table.setSize(clientFrame.getWidth(), (int)(clientFrame.getHeight()*0.5));
-		table.setLocation(0, (clientFrame.getHeight() - table.getHeight()));
+		table.setSize(1362, 349);
+		table.setLocation(1, 392);
 		table.setBorder(black);
 		
 		clientFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
