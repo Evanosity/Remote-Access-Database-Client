@@ -57,6 +57,7 @@ public class ClientSide{
 		clientLogin.setDefaultCloseOperation(clientLogin.EXIT_ON_CLOSE);
 		clientLogin.setIconImage(frameIcon.getImage());
 		
+		
 		//Container c
 		Container c = new Container();
 		c.setLayout(null);
@@ -87,7 +88,7 @@ public class ClientSide{
 		errorName.setHorizontalAlignment(SwingConstants.CENTER);
 		errorName.setLocation(160,181);
 		errorName.setSize(187, 30);
-		errorName.setVisible(true);
+		errorName.setVisible(false);
 		Border background = BorderFactory.createLineBorder(clientLogin.getBackground(), 1);
 		errorName.setBorder(background);
 		c.add(errorName);
@@ -108,7 +109,7 @@ public class ClientSide{
 		errorCN.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		errorCN.setLocation(148,92);
 		errorCN.setSize(212, 30);
-		errorCN.setVisible(true);
+		errorCN.setVisible(false);
 		errorCN.setBorder(background);
 		c.add(errorCN);
 		
@@ -139,7 +140,7 @@ public class ClientSide{
 		errorPort.setHorizontalAlignment(SwingConstants.CENTER);
 		errorPort.setLocation(160,263);
 		errorPort.setSize(187, 30);
-		errorPort.setVisible(true);
+		errorPort.setVisible(false);
 		errorPort.setBorder(background);
 		c.add(errorPort);
 		
@@ -173,8 +174,26 @@ public class ClientSide{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//System.out.println("Height: " + clientLogin.getHeight() + "  Width: " + clientLogin.getWidth());
+			if(port.getText().equals("") || companyName.getText().equals("") || username.getText().equals("")) {
+				if(port.getText().equals("")) {
+					errorPort.setVisible(true);
+				}else {
+					errorPort.setVisible(false);
+				}
+				if(companyName.getText().equals("")) {
+					errorCN.setVisible(true);
+				}else {
+					errorCN.setVisible(false);
+				}
+				if(username.getText().equals("")) {
+					errorName.setVisible(true);
+				}else {
+					errorName.setVisible(false);
+				}
+			}else {
 				clientScreen();
 				clientLogin.dispose();
+			}
 				
 			}
 			
