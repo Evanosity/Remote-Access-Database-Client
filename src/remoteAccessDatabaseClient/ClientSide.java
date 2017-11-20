@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,41 +18,45 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JEditorPane;
 
 public class ClientSide{
 	
 	//Client Login
-	public JFrame clientLogin;
-	public JLabel intro;
-	public JLabel usernameLabel;
-	public JLabel errorName;
-	public JLabel errorCN;
-	public JLabel companyLabel;
-	public JLabel errorPort;
-	public JLabel portLabel;
-	public JTextField username;
-	public JTextField port;
-	public JTextField companyName;
-	public JButton login;
+	private static JFrame clientLogin;
+	private static JFrame clientFrame;
+	
+	private static JLabel intro;
+	private static JLabel usernameLabel;
+	private static JLabel errorName;
+	private static JLabel errorCN;
+	private static JLabel companyLabel;
+	private static JLabel errorPort;
+	private static JLabel portLabel;
+	private static JTextField username;
+	private static JTextField port;
+	private static JTextField companyName;
+	private static JButton login;
+	
 	//Client Screen
-	public JButton logout;
-	public JComboBox optionA;
-	public JComboBox optionB;
-	public JComboBox optionC;
-	public JComboBox optionD;
-	public JPanel table;
+	private static JButton logout;
+	private static JComboBox optionA;
+	private static JComboBox optionB;
+	private static JComboBox optionC;
+	private static JComboBox optionD;
+	private static JPanel table;
 	//Border
-	public Border black = BorderFactory.createLineBorder(Color.BLACK, 1);
-	//Image Icon
-	ImageIcon frameIcon = new ImageIcon("src\\remoteAccessDatabaseClient\\ClientIcon.png");
-
-	public void ClientSideLogin(){
+	private static Border black = BorderFactory.createLineBorder(Color.BLACK, 1);
+	private static ImageIcon frameIcon = new ImageIcon("src\\remoteAccessDatabaseClient\\ClientIcon.png");
+	
+	/**
+	 * 
+	 */
+	public static void ClientSideLogin(){
 		//JFrame clientLogin
 		clientLogin = new JFrame("Login");
 		clientLogin.setSize(553, 385);
 		clientLogin.setResizable(false);
-		clientLogin.setDefaultCloseOperation(clientLogin.EXIT_ON_CLOSE);
+		clientLogin.setDefaultCloseOperation(2); //2=EXIT_ON_CLOSE
 		clientLogin.setIconImage(frameIcon.getImage());
 		
 		
@@ -163,7 +165,7 @@ public class ClientSide{
 		
 		
 		
-		//Iniate login button
+		//Initiate login button
 		login = new JButton("Login");
 		login.setSize(99,31);
 		login.setLocation(204,304);
@@ -207,12 +209,12 @@ public class ClientSide{
 	/**
 	 * @wbp.parser.entryPoint
 	 */
-	public void clientScreen() {
+	public static void clientScreen() {
 		//JFrame clintFrame
-		JFrame clientFrame = new JFrame("Client Window");
+		clientFrame = new JFrame("Client Window");
 		clientFrame.setSize(1382, 784);
 		clientFrame.setVisible(true);
-		clientFrame.setDefaultCloseOperation(clientFrame.EXIT_ON_CLOSE);
+		clientFrame.setDefaultCloseOperation(2); //2=EXIT_ON_CLOSE
 		clientFrame.setIconImage(frameIcon.getImage());
 		
 		//Container clientCon
