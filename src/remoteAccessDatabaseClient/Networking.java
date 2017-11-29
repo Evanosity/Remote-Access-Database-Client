@@ -1,6 +1,19 @@
 package remoteAccessDatabaseClient;
 
 public class Networking {
-	//reee
-
+	public void begin(){
+		
+	}
+	
+	public void close(){
+		
+	}
+	
+	public void receive(){
+		
+	}
+	
+	public void send(){
+		
+	}
 }

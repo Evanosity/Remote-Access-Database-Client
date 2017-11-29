@@ -51,7 +51,7 @@ public class ClientSide{
 	/**
 	 * 
 	 */
-	public static void ClientSideLogin(){
+	public void ClientSideLogin(){
 		//JFrame clientLogin
 		clientLogin = new JFrame("Login");
 		clientLogin.setSize(553, 385);
@@ -209,7 +209,7 @@ public class ClientSide{
 	/**
 	 * @wbp.parser.entryPoint
 	 */
-	public static void clientScreen() {
+	public void clientScreen() {
 		//JFrame clintFrame
 		clientFrame = new JFrame("Client Window");
 		clientFrame.setSize(1382, 784);
