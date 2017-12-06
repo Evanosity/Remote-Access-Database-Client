@@ -4,10 +4,14 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
@@ -43,7 +47,12 @@ public class ClientSide{
 	private static JComboBox optionB;
 	private static JComboBox optionC;
 	private static JComboBox optionD;
-	private static JPanel table;
+	private static JTable table;
+	private static JScrollPane tableContainer;
+	private static String columnNames[];
+	private static String columnContents[][];
+	
+	//private static JPanel table;
 	//Border
 	private static Border black = BorderFactory.createLineBorder(Color.BLACK, 1);
 	private static ImageIcon frameIcon = new ImageIcon("src\\remoteAccessDatabaseClient\\ClientIcon.png");
@@ -256,10 +265,37 @@ public class ClientSide{
 		optionD.setLocation(760,196);
 		
 		
-		table = new JPanel();
+		columnNames = new String[] {
+				"Test","Test2","Test3"
+		};
+		
+		columnContents = new String[][] {
+				{"TestA","TestA2","TestA3"},
+				{"TestB","TestB2","TestB3"},
+				{"TestC","TestC2","TestC3"}
+		};
+		
+		table = new JTable(columnContents, columnNames);
 		table.setSize(1362, 349);
 		table.setLocation(1, 392);
 		table.setBorder(black);
+		table.addPropertyChangeListener(new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent arg0) {
+				try {
+					System.out.println("Row: " + table.getSelectedRow() + "\nColumn: " + table.getSelectedColumn() + "\nInfo: " + table.getModel().getValueAt(table.getSelectedRow(), table.getSelectedColumn()));
+				}catch(Exception e) {
+					
+				}
+			}
+			
+		});
+		
+		tableContainer = new JScrollPane(table);
+		tableContainer.setSize(1362, 349);
+		tableContainer.setLocation(1, 392);
+		tableContainer.setBorder(black);
 		
 		clientFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		clientCon.add(logout);
@@ -267,7 +303,7 @@ public class ClientSide{
 		clientCon.add(optionB);
 		clientCon.add(optionC);
 		clientCon.add(optionD);
-		clientCon.add(table);
+		clientCon.add(tableContainer);
 		
 	}
 }
