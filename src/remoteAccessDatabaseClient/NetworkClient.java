@@ -26,7 +26,7 @@ public class NetworkClient {
 	 * @param portNumber - the port to connect on
 	 * @param hostName - the host to connect to
 	 */
-	public NetworkClient(int portNumber, String hostName){
+	public NetworkClient(String hostName, int portNumber){
 		port=portNumber;
 		host=hostName;
 		
