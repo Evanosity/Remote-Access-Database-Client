@@ -32,6 +32,7 @@ public class NetworkClient {
 		
 		try{
 			client=new Socket(host, port);
+			System.out.println("Connection complete");
 			
 			send=new DataOutputStream(client.getOutputStream());
 			receive=new DataInputStream(client.getInputStream());
