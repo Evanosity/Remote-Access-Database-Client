@@ -21,7 +21,7 @@ public class NetworkClient {
 	private int port;
 	private String host;
 	
-	/**
+	/*
 	 * public NetworkClient - this is the constructor that sets up the class.
 	 * @param portNumber - the port to connect on
 	 * @param hostName - the host to connect to
@@ -42,7 +42,7 @@ public class NetworkClient {
 		}
 	}
 	
-	/**
+	/*
 	 * public String receiveMessage - this method will read an input from the server, then return it.
 	 * @return the received message
 	 * @throws IOException
@@ -51,7 +51,7 @@ public class NetworkClient {
 		return receive.readUTF();
 	}
 	
-	/**
+	/*
 	 * public void sendMessage - this method will send a message to the server.
 	 * @param toSend - the message to send.
 	 * @throws IOException
@@ -60,7 +60,7 @@ public class NetworkClient {
 		send.writeUTF(toSend);
 	}
 	
-	/**
+	/*
 	 * public void shutdown - closes the connection in a graceful fashion.
 	 * @throws IOException
 	 */
