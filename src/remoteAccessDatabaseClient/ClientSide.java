@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -65,7 +67,7 @@ public class ClientSide{
 		clientLogin = new JFrame("Login");
 		clientLogin.setSize(553, 385);
 		clientLogin.setResizable(false);
-		clientLogin.setDefaultCloseOperation(2); //2=EXIT_ON_CLOSE
+		clientLogin.setDefaultCloseOperation(3); //3=EXIT_ON_CLOSE
 		clientLogin.setIconImage(frameIcon.getImage());
 		
 		
@@ -223,7 +225,16 @@ public class ClientSide{
 		clientFrame = new JFrame("Client Window");
 		clientFrame.setSize(1382, 784);
 		clientFrame.setVisible(true);
-		clientFrame.setDefaultCloseOperation(2); //2=EXIT_ON_CLOSE
+		clientFrame.setDefaultCloseOperation(0); //3=EXIT_ON_CLOSE
+		
+		clientFrame.addWindowListener(new WindowAdapter(){
+	        public void windowClosing(WindowEvent event) {
+	        	System.out.println("Safe Shutdown Starting....");
+	        	//Close the network stuff here
+	        	System.exit(0);
+	        }
+		});
+		
 		clientFrame.setIconImage(frameIcon.getImage());
 		
 		//Container clientCon

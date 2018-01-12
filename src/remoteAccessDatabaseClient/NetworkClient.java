@@ -3,7 +3,6 @@ package remoteAccessDatabaseClient;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-
 import java.net.Socket;
 
 /**
@@ -60,6 +59,16 @@ public class NetworkClient {
 		send.writeUTF(toSend);
 	}
 	
+	/**
+	 * public void sendArray - this method sends a 1d string array to the server.
+	 * @param toSend - string array to send
+	 * @throws IOException
+	 */
+	public void sendArray(String[] toSend)throws IOException{
+		for(int i=0; i!=toSend.length; i++){
+			send.writeUTF(toSend[i]);
+		}
+	}
 	/**
 	 * public void shutdown - closes the connection in a graceful fashion.
 	 * @throws IOException
