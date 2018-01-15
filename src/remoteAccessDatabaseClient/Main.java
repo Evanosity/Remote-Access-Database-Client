@@ -19,4 +19,8 @@ public class Main {
 		
 		nc.receiveMessage();
 	}
+	
+	public static void pass(String[][][]from){
+		
+	}
 }
