@@ -49,9 +49,11 @@ public class ClientSide{
 	private static JLabel companyLabel;
 	private static JLabel errorPort;
 	private static JLabel portLabel;
+	private static JLabel IPLabel;
 	private static JTextField username;
 	private static JTextField port;
 	private static JTextField companyName;
+	private static JTextField IPAdress;
 	private static JButton login;
 	
 	//Client Screen
@@ -82,7 +84,7 @@ public class ClientSide{
 	public void ClientSideLogin(){
 		//JFrame clientLogin
 		clientLogin = new JFrame("Login");
-		clientLogin.setSize(553, 385);
+		clientLogin.setSize(553, 500);
 		clientLogin.setResizable(false);
 		clientLogin.setDefaultCloseOperation(3); //3=EXIT_ON_CLOSE
 		clientLogin.setIconImage(frameIcon.getImage());
@@ -164,7 +166,7 @@ public class ClientSide{
 		
 		
 		//JLabel errorPort
-		errorPort = new JLabel("Error Port Not Found");
+		errorPort = new JLabel("Could Not Connect");
 		errorPort.setForeground(Color.RED);
 		errorPort.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		errorPort.setHorizontalAlignment(SwingConstants.CENTER);
@@ -196,7 +198,7 @@ public class ClientSide{
 		//Initiate login button
 		login = new JButton("Login");
 		login.setSize(99,31);
-		login.setLocation(204,304);
+		login.setLocation(204,429);
 		c.add(login);
 		login.setVisible(true);
 		login.addActionListener(new ActionListener(){
@@ -206,6 +208,20 @@ public class ClientSide{
 			}
 			
 		});
+		
+		IPLabel = new JLabel("IP Adress");
+		IPLabel.setFont(new Font("Palatino Linotype", Font.PLAIN, 13));
+		IPLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		IPLabel.setSize(188, 30);
+		IPLabel.setLocation(160,292);
+		IPLabel.setVisible(true);
+		c.add(IPLabel);
+		
+		IPAdress = new JTextField("");
+		IPAdress.setSize(187,30);
+		IPAdress.setLocation(160,330);
+		IPAdress.setVisible(true);
+		c.add(IPAdress);
 		
 		//Set JFrame to Visible
 		clientLogin.setVisible(true);
