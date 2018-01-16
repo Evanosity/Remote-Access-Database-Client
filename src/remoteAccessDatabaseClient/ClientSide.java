@@ -250,7 +250,7 @@ public class ClientSide{
 		//JButton logout
 		logout = new JButton("Logout");
 		logout.setSize(92,32);
-		logout.setLocation(1260,354);
+		logout.setLocation(1230,349);
 		logout.addActionListener(new ActionListener() {
 
 			@Override
@@ -309,23 +309,21 @@ public class ClientSide{
 		});
 		
 		tableContainer = new JScrollPane(table);
-		tableContainer.setSize(1362, 349);
+		tableContainer.setSize(908, 349);
 		tableContainer.setLocation(27, 392);
 		tableContainer.setBorder(black);
 		
 		//Start Table 2
 		
 		columnNames2 = new String[] {
-				"Test","Test2","Test3"
+				"Test"
 		};
 		
 		columnContents2 = new String[][] {
-				{"TestA","TestA2","TestA3"},
-				{"TestB","TestB2","TestB3"},
-				{"TestC","TestC2","TestC3"}
+				{"TestA"}
 		};
 		
-		table2 = new JTable(columnContents, columnNames);
+		table2 = new JTable(columnContents2, columnNames2);
 		table2.setSize(1362, 349);
 		table2.setLocation(1, 392);
 		table2.setBorder(black);
@@ -344,7 +342,7 @@ public class ClientSide{
 		
 		tableContainer2 = new JScrollPane(table2);
 		tableContainer2.setSize(363, 349);
-		tableContainer2.setLocation(1487, 392);
+		tableContainer2.setLocation(966, 392);
 		tableContainer2.setBorder(black);
 		
 		
