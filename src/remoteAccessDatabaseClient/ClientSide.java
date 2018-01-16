@@ -52,6 +52,11 @@ public class ClientSide{
 	private static String columnNames[];
 	private static String columnContents[][];
 	
+	private static JTable table2;
+	private static JScrollPane tableContainer2;
+	private static String columnNames2[];
+	private static String columnContents2[][];
+	
 	//private static JPanel table;
 	//Border
 	private static Border black = BorderFactory.createLineBorder(Color.BLACK, 1);
@@ -294,8 +299,49 @@ public class ClientSide{
 		
 		tableContainer = new JScrollPane(table);
 		tableContainer.setSize(1362, 349);
-		tableContainer.setLocation(1, 392);
+		tableContainer.setLocation(27, 392);
 		tableContainer.setBorder(black);
+		
+		//Start Table 2
+		
+		columnNames2 = new String[] {
+				"Test","Test2","Test3"
+		};
+		
+		columnContents2 = new String[][] {
+				{"TestA","TestA2","TestA3"},
+				{"TestB","TestB2","TestB3"},
+				{"TestC","TestC2","TestC3"}
+		};
+		
+		table2 = new JTable(columnContents, columnNames);
+		table2.setSize(1362, 349);
+		table2.setLocation(1, 392);
+		table2.setBorder(black);
+		table2.addPropertyChangeListener(new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent arg0) {
+				try {
+					System.out.println("Row: " + table.getSelectedRow() + "\nColumn: " + table.getSelectedColumn() + "\nInfo: " + table.getModel().getValueAt(table.getSelectedRow(), table.getSelectedColumn()));
+				}catch(Exception e) {
+					
+				}
+			}
+			
+		});
+		
+		tableContainer2 = new JScrollPane(table2);
+		tableContainer2.setSize(363, 349);
+		tableContainer2.setLocation(1487, 392);
+		tableContainer2.setBorder(black);
+		
+		
+		
+		
+		
+		
+		
 		
 		clientFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		clientCon.add(logout);
@@ -304,6 +350,7 @@ public class ClientSide{
 		clientCon.add(optionC);
 		clientCon.add(optionD);
 		clientCon.add(tableContainer);
+		clientCon.add(tableContainer2);
 		
 	}
 }
