@@ -10,6 +10,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -241,7 +242,11 @@ public class ClientSide{
 		clientFrame.addWindowListener(new WindowAdapter(){
 	        public void windowClosing(WindowEvent event) {
 	        	System.out.println("Safe Shutdown Starting....");
-	        	//Close the network stuff here
+	        	try {
+					blackMagic.shutdown();
+				} catch (IOException e) {
+					System.out.println("Cry I guess?");
+				}
 	        	System.exit(0);
 	        }
 		});

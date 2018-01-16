@@ -58,10 +58,28 @@ public class NetworkClient {
 	 * @return toReturn - the organized 3d array
 	 * @throws IOException
 	 */
-	public String[][][] receiveSuperArray(int x, int y, int z)throws IOException{
+	public String[][][] receiveSuperArray()throws IOException{
+		int x=0;
+		int y=0;
+		int z=0;
+		String size="";
+
+		size=receive.readUTF();
+		
+		x=Integer.parseInt(size.substring(size.lastIndexOf(":")+1, size.length()));
+		size=size.substring(0, size.lastIndexOf(":"));
+		
+		y=Integer.parseInt(size.substring(size.lastIndexOf(":")+1, size.length()));
+		size=size.substring(0, size.lastIndexOf(":"));
+		
+		z=Integer.parseInt(size.substring(size.lastIndexOf(":")+1, size.length()));
+		size=size.substring(0, size.lastIndexOf(":"));
+		
 		String[][][]toReturn=new String[x][y][z];
-		String[]unorganized=new String[x*y*z];
+		String[]unorganized=new String[x*y*z+1];
 		int a=0;
+		
+		
 		
 		//this loop will simply collect all the information and then immediately store it.
 		for(int i=0; i!=toReturn.length; i++){
@@ -69,6 +87,7 @@ public class NetworkClient {
 				for(int l=0; l!=toReturn[i][k].length;l++){
 					a++;
 					unorganized[a]=receive.readUTF();
+					System.out.println(unorganized[a]);
 				}
 			}
 		}
@@ -89,6 +108,14 @@ public class NetworkClient {
 			unorganized[i]=unorganized[i].substring(unorganized[i].indexOf(":")+1,unorganized[i].length());
 			
 			toReturn[xe][ye][ze]=unorganized[i];
+		}
+		
+		for(int i=0; i!=toReturn.length; i++){
+			for(int k=0; k!=toReturn[i].length;k++){
+				for(int l=0; l!=toReturn[i][k].length;l++){
+					System.out.println(toReturn[i][k][l]);
+				}
+			}
 		}
 		
 		return toReturn;

@@ -16,6 +16,8 @@ public class Main {
 		csl.ClientSideLogin();
 		
 		NetworkClient nc=new NetworkClient("192.168.0.100",6066);
+		nc.receiveSuperArray();
+		
 		
 		//nc.receiveMessage();
 	}
