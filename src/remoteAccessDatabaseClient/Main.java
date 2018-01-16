@@ -17,6 +17,6 @@ public class Main {
 		
 		NetworkClient nc=new NetworkClient("192.168.0.100",6066);
 		
-		nc.receiveMessage();
+		//nc.receiveMessage();
 	}
 }

@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+//import java.awt.event.FocusEvent;
+//import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
@@ -11,12 +13,16 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+//import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 import java.awt.Font;
 
@@ -25,7 +31,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
+@SuppressWarnings("rawtypes")
+
 public class ClientSide{
+	
+	private static String[][][] localInfo;
+	private static NetworkClient blackMagic;
 	
 	//Client Login
 	private static JFrame clientLogin;
@@ -50,6 +61,7 @@ public class ClientSide{
 	private static JComboBox optionC;
 	private static JComboBox optionD;
 	private static JTable table;
+	private static DefaultTableModel tableModel;
 	private static JScrollPane tableContainer;
 	private static String columnNames[];
 	private static String columnContents[][];
@@ -111,7 +123,7 @@ public class ClientSide{
 		errorName.setBorder(background);
 		c.add(errorName);
 		
-		//JTextField username
+		//JTextField userName
 		username = new JTextField("");
 		username.setHorizontalAlignment(SwingConstants.CENTER);
 		username.setSize(187,30);
@@ -188,31 +200,9 @@ public class ClientSide{
 		c.add(login);
 		login.setVisible(true);
 		login.addActionListener(new ActionListener(){
-
-			@Override
+			
 			public void actionPerformed(ActionEvent e) {
-				//System.out.println("Height: " + clientLogin.getHeight() + "  Width: " + clientLogin.getWidth());
-			if(port.getText().equals("") || companyName.getText().equals("") || username.getText().equals("")) {
-				if(port.getText().equals("")) {
-					errorPort.setVisible(true);
-				}else {
-					errorPort.setVisible(false);
-				}
-				if(companyName.getText().equals("")) {
-					errorCN.setVisible(true);
-				}else {
-					errorCN.setVisible(false);
-				}
-				if(username.getText().equals("")) {
-					errorName.setVisible(true);
-				}else {
-					errorName.setVisible(false);
-				}
-			}else {
-				clientScreen();
-				clientLogin.dispose();
-			}
-				
+				//blackMagic=new NetworkClient()
 			}
 			
 		});
@@ -282,31 +272,54 @@ public class ClientSide{
 		
 		
 		columnNames = new String[] {
-				"Test","Test2","Test3"
+				"Test","Test2","Test3","Test4"
 		};
 		
 		columnContents = new String[][] {
-				{"TestA","TestA2","TestA3"},
-				{"TestB","TestB2","TestB3"},
-				{"TestC","TestC2","TestC3"}
+				{"TestA","TestA2","TestA3","TestA4"},
+				{"TestB","TestB2","TestB3","TestA4"},
+				{"TestC","TestC2","TestC3","TestA4"}
 		};
 		
-		table = new JTable(columnContents, columnNames);
+		
+		tableModel=new DefaultTableModel();
+		table=new JTable(tableModel);
 		table.setSize(1362, 349);
 		table.setLocation(1, 392);
 		table.setBorder(black);
-		table.addPropertyChangeListener(new PropertyChangeListener() {
+		
+		//these two will create blank columns and then fill them
+		addTableColumns(4);
+		addTableRows(3, columnContents);
+		changeColumnHeadings(columnNames);
+		
+		table.setCellSelectionEnabled(true);
+		ListSelectionModel cellSelectionModel=table.getSelectionModel();
+		cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		cellSelectionModel.addListSelectionListener(new ListSelectionListener(){
 
 			@Override
-			public void propertyChange(PropertyChangeEvent arg0) {
-				try {
-					System.out.println("Row: " + table.getSelectedRow() + "\nColumn: " + table.getSelectedColumn() + "\nInfo: " + table.getModel().getValueAt(table.getSelectedRow(), table.getSelectedColumn()));
-				}catch(Exception e) {
-					
-				}
+			public void valueChanged(ListSelectionEvent arg0) {
+		        String selectedData = null;
+		        
+		        //selectedData=(String) table.get
+
+		        
+		        
+		        int[] selectedRow = table.getSelectedRows();
+		        int[] selectedColumns = table.getSelectedColumns();
+
+		        for (int i=0;i<selectedRow.length;i++) {
+		        	for (int j=0;j<selectedColumns.length;j++) {
+		        		selectedData=(String) table.getValueAt(selectedRow[i],selectedColumns[j]);
+		        	}
+		        }
+		        System.out.println("Selected: " + selectedData);
 			}
 			
 		});
+
 		
 		tableContainer = new JScrollPane(table);
 		tableContainer.setSize(908, 349);
@@ -346,12 +359,7 @@ public class ClientSide{
 		tableContainer2.setBorder(black);
 		
 		
-		
-		
-		
-		
-		
-		
+		//add all of the components to the frame.
 		clientFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		clientCon.add(logout);
 		clientCon.add(optionA);
@@ -362,4 +370,80 @@ public class ClientSide{
 		clientCon.add(tableContainer2);
 		
 	}
+	
+	/*
+	 * All the methods after this are helper methods for the JTable and whatnot.
+	 */
+	
+	/**
+	 * public static void resetTable - this method will remove all information from the jtable and reset the row/column count, so the table can be refilled with new information
+	 */
+	public static void resetTable(){
+		
+	}
+	
+	public static void addTableRows(int newRows, String[][]contents){
+		for(int i=0;i!=newRows;i++){
+			tableModel.addRow(contents[i]);
+		}
+	}
+	
+	/**
+	 * public static void addTableRows
+	 * @param newRows
+	 */
+	public static void addTableRows(int newRows){
+		for(int i=0;i!=newRows;i++){
+			tableModel.addRow(new Object[]{});
+		}
+	}
+	
+	public static void addTableColumns(int newColumns){
+		for(int i=0;i!=newColumns;i++){
+			tableModel.addColumn("");
+		}
+	}
+	
+	/**
+	 * public static void changeColumnHeadings - this method will update the headers on the JTable to the given 
+	 * @param changeTo
+	 */
+	public static void changeColumnHeadings(String[]changeTo){
+		for(int i=0;i!=changeTo.length;i++){
+			table.getColumnModel().getColumn(i).setHeaderValue(changeTo[i]);
+		}
+		table.getTableHeader().repaint(); //redraw the table so that the headers actually show up
+	}
+	
+	
+	/**
+	 * public static void setLocalValues - this method will take a 3d string from another source, load it into local memory and then into the table.
+	 * @param newLocal
+	 */
+	public static void setLocalValues(String[][][]newLocal){
+		localInfo=newLocal;
+		setTableTo(localInfo);
+	}
+	
+	/**
+	 * public static void setTableTo - fills the JTable with the given information
+	 * @param toAdd - the 2d array to fill the table with
+	 */
+	public static void setTableTo(String[][][]toAdd){
+		for(int i=0;i!=toAdd.length;i++){
+			for(int f=0;f!=toAdd[i].length;i++){
+				table.setValueAt(toAdd[i][f][0], i, f);
+			}
+		}
+	}
+	
+	/**
+	 * public String[][][] getFromTable - this method will return all the values stored locally; INCLUDING the hidden values from the
+	 * second table.
+	 * @return localInfo - the 3d string array of all the relevant information
+	 */
+	public String[][][] getFromTable(){
+		return localInfo;
+	}
+	
 }
