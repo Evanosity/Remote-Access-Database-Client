@@ -1,18 +1,8 @@
-<<<<<<< HEAD
-/**
- * :1:1:1:message
- */
-=======
->>>>>>> SubC
 package remoteAccessDatabaseClient;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-<<<<<<< HEAD
-=======
-
->>>>>>> SubC
 import java.net.Socket;
 
 /**
@@ -30,11 +20,7 @@ public class NetworkClient {
 	private int port;
 	private String host;
 	
-<<<<<<< HEAD
 	/**
-=======
-	/*
->>>>>>> SubC
 	 * public NetworkClient - this is the constructor that sets up the class.
 	 * @param portNumber - the port to connect on
 	 * @param hostName - the host to connect to
@@ -55,11 +41,7 @@ public class NetworkClient {
 		}
 	}
 	
-<<<<<<< HEAD
 	/**
-=======
-	/*
->>>>>>> SubC
 	 * public String receiveMessage - this method will read an input from the server, then return it.
 	 * @return the received message
 	 * @throws IOException
@@ -68,7 +50,6 @@ public class NetworkClient {
 		return receive.readUTF();
 	}
 	
-<<<<<<< HEAD
 	/**
 	 * public String[][][] receiveSuperArray - this method will receive a 3d array from the client 
 	 * @param x - the size of the first array
@@ -114,9 +95,6 @@ public class NetworkClient {
 	}
 	
 	/**
-=======
-	/*
->>>>>>> SubC
 	 * public void sendMessage - this method will send a message to the server.
 	 * @param toSend - the message to send.
 	 * @throws IOException
@@ -125,7 +103,6 @@ public class NetworkClient {
 		send.writeUTF(toSend);
 	}
 	
-<<<<<<< HEAD
 	/**
 	 * public void sendArray - this method sends a 1d string array to the server.
 	 * @param toSend - string array to send
@@ -167,9 +144,6 @@ public class NetworkClient {
 	}
 	
 	/**
-=======
-	/*
->>>>>>> SubC
 	 * public void shutdown - closes the connection in a graceful fashion.
 	 * @throws IOException
 	 */

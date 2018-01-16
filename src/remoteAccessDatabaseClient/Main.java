@@ -1,6 +1,5 @@
 package remoteAccessDatabaseClient;
 
-<<<<<<< HEAD
 import java.io.IOException;
 
 public class Main {
@@ -19,20 +18,5 @@ public class Main {
 		NetworkClient nc=new NetworkClient("192.168.0.100",6066);
 		
 		nc.receiveMessage();
-	}
-	
-	public static void pass(String[][][]from){
-=======
-public class Main {
-	
-	private static ClientSide csl;
-	private static NetworkClient nc;
-	
-	public static void main(String[] args) {
-		csl = new ClientSide();
-		csl.ClientSideLogin();
-		nc = new NetworkClient("192.168.0.0", 6066);
->>>>>>> SubC
-		
 	}
 }
