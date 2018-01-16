@@ -1,3 +1,6 @@
+/**
+ * :1:1:1:message
+ */
 package remoteAccessDatabaseClient;
 
 import java.io.DataInputStream;
@@ -75,7 +78,20 @@ public class NetworkClient {
 		
 		//this loop will evaluate all of the information we received and organize it appropriately.
 		for(int i=0; i!=unorganized.length; i++){
-			toReturn[1][2][3]=unorganized[i];
+			int xe;
+			int ye;
+			int ze;
+			
+			xe=Integer.parseInt(unorganized[i].substring(0, unorganized[i].indexOf(":")));
+			unorganized[i]=unorganized[i].substring(unorganized[i].indexOf(":")+1,unorganized[i].length());
+			
+			ye=Integer.parseInt(unorganized[i].substring(0, unorganized[i].indexOf(":")));
+			unorganized[i]=unorganized[i].substring(unorganized[i].indexOf(":")+1,unorganized[i].length());
+			
+			ze=Integer.parseInt(unorganized[i].substring(0, unorganized[i].indexOf(":")));
+			unorganized[i]=unorganized[i].substring(unorganized[i].indexOf(":")+1,unorganized[i].length());
+			
+			toReturn[xe][ye][ze]=unorganized[i];
 		}
 		
 		return toReturn;
@@ -124,11 +140,7 @@ public class NetworkClient {
 		for(int i=0; i!=toSend.length; i++){
 			for(int k=0; k!=toSend[i].length;k++){
 				for(int l=0; l!=toSend[i][k].length;l++){
-					send.writeUTF("arrayID:"				
-							+i+"!"
-							+k+"!"
-							+l+"!"
-							+":Message:"+toSend[i][k][l]);
+					send.writeUTF(i+":"+k+":"+l+":"+toSend[i][k][l]);
 				}
 			}
 		}
