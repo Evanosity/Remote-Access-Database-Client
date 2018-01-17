@@ -75,25 +75,29 @@ public class NetworkClient {
 		z=Integer.parseInt(size.substring(size.lastIndexOf(":")+1, size.length()));
 		size=size.substring(0, size.lastIndexOf(":"));
 		
-		String[][][]toReturn=new String[x][y][z];
-		String[]unorganized=new String[x*y*z+1];
+		String[][][]toReturn=new String[x+1][y+1][z+1];
+		String[]unorganized=new String[(x+1)*(y+1)*(z+1)+1];
 		int a=0;
+		
+		System.out.println(x+" "+y+" "+z);
 		
 		
 		
 		//this loop will simply collect all the information and then immediately store it.
-		for(int i=0; i!=toReturn.length; i++){
-			for(int k=0; k!=toReturn[i].length;k++){
-				for(int l=0; l!=toReturn[i][k].length;l++){
+		for(int i=0; i!=x+1; i++){
+			for(int k=0; k!=y+1;k++){
+				for(int l=0; l!=z+1;l++){
+					System.out.println(a);
 					a++;
-					unorganized[a]=receive.readUTF();
-					System.out.println(unorganized[a]);
+					//unorganized[a]=receive.readUTF();
+					toReturn[i][k][l]=receive.readUTF();
+					System.out.println(toReturn[i][k][l]);
 				}
 			}
 		}
 		
 		//this loop will evaluate all of the information we received and organize it appropriately.
-		for(int i=0; i!=unorganized.length; i++){
+		/**for(int i=0; i!=unorganized.length; i++){
 			int xe;
 			int ye;
 			int ze;
@@ -108,11 +112,12 @@ public class NetworkClient {
 			unorganized[i]=unorganized[i].substring(unorganized[i].indexOf(":")+1,unorganized[i].length());
 			
 			toReturn[xe][ye][ze]=unorganized[i];
-		}
+		}*/
 		
 		for(int i=0; i!=toReturn.length; i++){
 			for(int k=0; k!=toReturn[i].length;k++){
 				for(int l=0; l!=toReturn[i][k].length;l++){
+					toReturn[i][k][l]=toReturn[i][k][l].substring(toReturn[i][k][l].lastIndexOf(":")+1, toReturn[i][k][l].length());
 					System.out.println(toReturn[i][k][l]);
 				}
 			}
@@ -168,6 +173,13 @@ public class NetworkClient {
 				}
 			}
 		}
+	}
+	
+	public boolean isConnected(){
+		if(client.isConnected()){
+			return true;
+		}
+		return false;
 	}
 	
 	/**

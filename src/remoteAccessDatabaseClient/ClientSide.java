@@ -54,7 +54,7 @@ public class ClientSide{
 	private static JTextField username;
 	private static JTextField port;
 	private static JTextField companyName;
-	private static JTextField IPAdress;
+	private static JTextField IPAddress;
 	private static JButton login;
 	
 	//Client Screen
@@ -74,13 +74,12 @@ public class ClientSide{
 	private static String columnNames2[];
 	private static String columnContents2[][];
 	
-	//private static JPanel table;
-	//Border
+	//border
 	private static Border black = BorderFactory.createLineBorder(Color.BLACK, 1);
 	private static ImageIcon frameIcon = new ImageIcon("src\\remoteAccessDatabaseClient\\ClientIcon.png");
 	
 	/**
-	 * 
+	 * public void ClientSideLogin - this is the method that creates the login frame and its components.
 	 */
 	public void ClientSideLogin(){
 		//JFrame clientLogin
@@ -167,7 +166,7 @@ public class ClientSide{
 		
 		
 		//JLabel errorPort
-		errorPort = new JLabel("Could Not Connect");
+		errorPort = new JLabel("IP Address or Port is incorrect.");
 		errorPort.setForeground(Color.RED);
 		errorPort.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		errorPort.setHorizontalAlignment(SwingConstants.CENTER);
@@ -194,7 +193,19 @@ public class ClientSide{
 		port.setVisible(true);
 		c.add(port);
 		
+		IPLabel = new JLabel("IP Adress");
+		IPLabel.setFont(new Font("Palatino Linotype", Font.PLAIN, 13));
+		IPLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		IPLabel.setSize(188, 30);
+		IPLabel.setLocation(160,292);
+		IPLabel.setVisible(true);
+		c.add(IPLabel);
 		
+		IPAddress = new JTextField("");
+		IPAddress.setSize(187,30);
+		IPAddress.setLocation(160,330);
+		IPAddress.setVisible(true);
+		c.add(IPAddress);
 		
 		//Initiate login button
 		login = new JButton("Login");
@@ -204,25 +215,25 @@ public class ClientSide{
 		login.setVisible(true);
 		login.addActionListener(new ActionListener(){
 			
+			//tests to see if the server can connect. If not, throws a hissy fit. That's ok though.
 			public void actionPerformed(ActionEvent e) {
-				//blackMagic=new NetworkClient()
+				/*try{
+					blackMagic=new NetworkClient(IPAddress.getText(),Integer.parseInt(port.getText()));
+					if(blackMagic.isConnected()){
+						clientScreen();
+					}
+					else{
+						errorPort.setVisible(true);
+					}
+				}
+				catch(NumberFormatException re){
+					errorPort.setVisible(true);
+				}*/
+				clientScreen();
+
 			}
 			
 		});
-		
-		IPLabel = new JLabel("IP Adress");
-		IPLabel.setFont(new Font("Palatino Linotype", Font.PLAIN, 13));
-		IPLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		IPLabel.setSize(188, 30);
-		IPLabel.setLocation(160,292);
-		IPLabel.setVisible(true);
-		c.add(IPLabel);
-		
-		IPAdress = new JTextField("");
-		IPAdress.setSize(187,30);
-		IPAdress.setLocation(160,330);
-		IPAdress.setVisible(true);
-		c.add(IPAdress);
 		
 		//Set JFrame to Visible
 		clientLogin.setVisible(true);
@@ -230,14 +241,14 @@ public class ClientSide{
 	}
 	
 	/**
-	 * @wbp.parser.entryPoint
+	 * public void clientScreen - this is the method that 
 	 */
 	public void clientScreen() {
 		//JFrame clintFrame
 		clientFrame = new JFrame("Client Window");
 		clientFrame.setSize(1382, 784);
 		clientFrame.setVisible(true);
-		clientFrame.setDefaultCloseOperation(0); //3=EXIT_ON_CLOSE
+		clientFrame.setDefaultCloseOperation(3); //3=EXIT_ON_CLOSE
 		
 		clientFrame.addWindowListener(new WindowAdapter(){
 	        public void windowClosing(WindowEvent event) {
@@ -246,8 +257,12 @@ public class ClientSide{
 					blackMagic.shutdown();
 				} catch (IOException e) {
 					System.out.println("Cry I guess?");
+				} catch(NullPointerException e){
+					
 				}
-	        	System.exit(0);
+	        	finally{
+		        	System.exit(0);
+	        	}
 	        }
 		});
 		
@@ -272,36 +287,30 @@ public class ClientSide{
 			
 		});
 		
+		
 		optionA = new JComboBox();
 		optionA.setSize(190,37);
 		optionA.setLocation(40,196);
-		
-		
+			
 		optionB = new JComboBox();
 		optionB.setSize(190,37);
 		optionB.setLocation(280,196);
-		
 		
 		optionC = new JComboBox();
 		optionC.setSize(190,37);
 		optionC.setLocation(520,196);
 		
-		
 		optionD = new JComboBox();
 		optionD.setSize(190,37);
 		optionD.setLocation(760,196);
-		
-		
-		columnNames = new String[] {
-				"Test","Test2","Test3","Test4"
-		};
+	
 		
 		columnContents = new String[][] {
 				{"TestA","TestA2","TestA3","TestA4"},
-				{"TestB","TestB2","TestB3","TestA4"},
-				{"TestC","TestC2","TestC3","TestA4"}
+				{"TestB","TestB2","TestB3","TestB4"},
+				{"TestC","TestC2","TestC3","TestC4"},
+				{"TestD","TestD2","TestD3","TestD4"}
 		};
-		
 		
 		tableModel=new DefaultTableModel();
 		table=new JTable(tableModel);
@@ -310,24 +319,18 @@ public class ClientSide{
 		table.setBorder(black);
 		
 		//these two will create blank columns and then fill them
-		addTableColumns(4);
-		addTableRows(3, columnContents);
-		changeColumnHeadings(columnNames);
+		//addTableColumns(4);
+		//addTableRows(3, columnContents);
+		//changeColumnHeadings(columnNames);
 		
 		table.setCellSelectionEnabled(true);
 		ListSelectionModel cellSelectionModel=table.getSelectionModel();
 		cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
 		cellSelectionModel.addListSelectionListener(new ListSelectionListener(){
-
-			@Override
+			//This listener waits until the cell is clicked, and then outputs. This will be used to detect which cell the user is in
+			//when pulling up the aux table.
 			public void valueChanged(ListSelectionEvent arg0) {
 		        String selectedData = null;
-		        
-		        //selectedData=(String) table.get
-
-		        
-		        
 		        int[] selectedRow = table.getSelectedRows();
 		        int[] selectedColumns = table.getSelectedColumns();
 
@@ -336,9 +339,8 @@ public class ClientSide{
 		        		selectedData=(String) table.getValueAt(selectedRow[i],selectedColumns[j]);
 		        	}
 		        }
-		        System.out.println("Selected: " + selectedData);
+		       // fillAuxTable()
 			}
-			
 		});
 
 		
@@ -390,11 +392,32 @@ public class ClientSide{
 		clientCon.add(tableContainer);
 		clientCon.add(tableContainer2);
 		
+		//NetworkClient blackMagic=new NetworkClient("192.168.0.100",6066);
+		//try {
+			//localInfo=blackMagic.receiveSuperArray();
+			addTableColumns(4);
+			addTableRows(4);
+			
+			//columnNames = new String[] {
+			//		"SYSTEM_ID","SYSTEM_CODE","SYSTEM_NAME","SYSTEM_DESC","EFFECTIVE_DATE","EXPIRY_DATE","CREATED_SYSTEM_ID","CREATED_USER","CREATED_DATE","UPDATED_SYSTEM_ID","UPDATED_USER","UPDATED_DATE"
+			//};
+			columnNames=new String[] { "one","two,","three","four"};
+			changeColumnHeadings(columnNames);
+			setTableTo(columnContents);
+			getFromTable();
+		//} catch (IOException e) {
+		//	// TODO Auto-generated catch block
+		//	e.printStackTrace();
+		//}
 	}
 	
 	/*
 	 * All the methods after this are helper methods for the JTable and whatnot.
 	 */
+	
+	public void doTheThang(){
+		
+	}
 	
 	/**
 	 * public static void resetTable - this method will remove all information from the jtable and reset the row/column count, so the table can be refilled with new information
@@ -403,6 +426,11 @@ public class ClientSide{
 		
 	}
 	
+	/**
+	 * public static void addTableRows - this will add a specified number of rows to the table, fill with a specified string array.
+	 * @param newRows - the number of rows to create.
+	 * @param contents - the contents of those rows.
+	 */
 	public static void addTableRows(int newRows, String[][]contents){
 		for(int i=0;i!=newRows;i++){
 			tableModel.addRow(contents[i]);
@@ -410,8 +438,8 @@ public class ClientSide{
 	}
 	
 	/**
-	 * public static void addTableRows
-	 * @param newRows
+	 * public static void addTableRows - creates blank rows. MIGHT BE BROKEN, DON'T USE!!!
+	 * @param newRows will create x amount of blank rows(I think?)
 	 */
 	public static void addTableRows(int newRows){
 		for(int i=0;i!=newRows;i++){
@@ -443,28 +471,34 @@ public class ClientSide{
 	 */
 	public static void setLocalValues(String[][][]newLocal){
 		localInfo=newLocal;
-		setTableTo(localInfo);
+		//setTableTo(localInfo);
 	}
 	
 	/**
 	 * public static void setTableTo - fills the JTable with the given information
 	 * @param toAdd - the 2d array to fill the table with
 	 */
-	public static void setTableTo(String[][][]toAdd){
-		for(int i=0;i!=toAdd.length;i++){
-			for(int f=0;f!=toAdd[i].length;i++){
-				table.setValueAt(toAdd[i][f][0], i, f);
+	public static void setTableTo(String[][]toAdd){
+		for(int i=0;i!=tableModel.getColumnCount();i++){
+			for(int f=0;f!=tableModel.getRowCount();f++){
+				table.setValueAt(toAdd[i][f], i, f);
 			}
 		}
 	}
 	
 	/**
-	 * public String[][][] getFromTable - this method will return all the values stored locally; INCLUDING the hidden values from the
+	 * public String[][] getFromTable - this method will return all the values stored locally; INCLUDING the hidden values from the
 	 * second table.
-	 * @return localInfo - the 3d string array of all the relevant information
+	 * @return localInfo - the 2d string array of all the relevant information
 	 */
-	public String[][][] getFromTable(){
-		return localInfo;
+	public String[][] getFromTable(){
+		String[][]toReturn=new String[tableModel.getColumnCount()][tableModel.getRowCount()];
+		for(int i=0;i!=tableModel.getColumnCount();i++){
+			for(int f=0;f!=tableModel.getRowCount();f++){
+				toReturn[i][f]=(String) table.getValueAt(i,f);
+			}
+		}
+		return toReturn;
 	}
 	
 }
