@@ -9,7 +9,7 @@ import java.net.Socket;
  * public class NetworkClient - this is the framework for networking, and it just has the very basic receive/send methods. These will be used
  * by other classes to effectively send and receive data.
  * @author Evanosity
- * @date December 11 2017
+ * @date January 17 2017
  */
 public class NetworkClient {
 	private Socket client;
@@ -51,6 +51,20 @@ public class NetworkClient {
 	}
 	
 	/**
+	 * public String[] receiveArray - this method will receive a string array from the socket.
+	 * @return the received array
+	 * @throws IOException
+	 */
+	public String[] receiveArray()throws IOException{
+		String[]toReturn;
+		toReturn=new String[Integer.parseInt(receive.readUTF())];
+		for(int i=0;i!=toReturn.length;i++){
+			toReturn[i]=receive.readUTF();
+		}
+		return toReturn;
+	}
+	
+	/**
 	 * public String[][] receiveDoubleArray - this method will receive a 2d array over a socket. 
 	 * @return
 	 * @throws IOException
@@ -81,11 +95,13 @@ public class NetworkClient {
 	}
 	
 	/**
-	 * public void sendArray - this method sends a 1d string array to the server.
+	 * public void sendArray - this method sends a 1d string array to the client.
 	 * @param toSend - string array to send
 	 * @throws IOException
 	 */
 	public void sendArray(String[] toSend)throws IOException{
+		String length=""+toSend.length;
+		send.writeUTF(length);
 		for(int i=0; i!=toSend.length; i++){
 			send.writeUTF(toSend[i]);
 		}

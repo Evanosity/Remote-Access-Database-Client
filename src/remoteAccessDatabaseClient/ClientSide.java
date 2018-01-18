@@ -36,8 +36,8 @@ import javax.swing.JComboBox;
 
 public class ClientSide{
 	
-	private static String[][][] localInfo;
 	private static NetworkClient blackMagic;
+	private static String[][] localValues;
 	
 	//Client Login
 	private static JFrame clientLogin;
@@ -59,6 +59,7 @@ public class ClientSide{
 	
 	//Client Screen
 	private static JButton logout;
+	private static JButton save;
 	private static JComboBox optionA;
 	private static JComboBox optionB;
 	private static JComboBox optionC;
@@ -67,7 +68,6 @@ public class ClientSide{
 	private static DefaultTableModel tableModel;
 	private static JScrollPane tableContainer;
 	private static String columnNames[];
-	private static String columnContents[][];
 	
 	private static JTable table2;
 	private static JScrollPane tableContainer2;
@@ -230,7 +230,6 @@ public class ClientSide{
 					errorPort.setVisible(true);
 				}*/
 				clientScreen();
-
 			}
 			
 		});
@@ -287,7 +286,19 @@ public class ClientSide{
 			
 		});
 		
-		
+		//JButton logout
+		save = new JButton("Save");
+		save.setSize(92,32);
+		save.setLocation(1230,400);
+		save.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					saveToDatabase();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}		
+		});		
 		optionA = new JComboBox();
 		optionA.setSize(190,37);
 		optionA.setLocation(40,196);
@@ -303,14 +314,6 @@ public class ClientSide{
 		optionD = new JComboBox();
 		optionD.setSize(190,37);
 		optionD.setLocation(760,196);
-	
-		
-		columnContents = new String[][] {
-				{"TestA","TestA2","TestA3","TestA4"},
-				{"TestB","TestB2","TestB3","TestB4"},
-				{"TestC","TestC2","TestC3","TestC4"},
-				{"TestD","TestD2","TestD3","TestD4"}
-		};
 		
 		tableModel=new DefaultTableModel();
 		table=new JTable(tableModel);
@@ -330,6 +333,7 @@ public class ClientSide{
 			//This listener waits until the cell is clicked, and then outputs. This will be used to detect which cell the user is in
 			//when pulling up the aux table.
 			public void valueChanged(ListSelectionEvent arg0) {
+				@SuppressWarnings("unused")
 		        String selectedData = null;
 		        int[] selectedRow = table.getSelectedRows();
 		        int[] selectedColumns = table.getSelectedColumns();
@@ -339,7 +343,6 @@ public class ClientSide{
 		        		selectedData=(String) table.getValueAt(selectedRow[i],selectedColumns[j]);
 		        	}
 		        }
-		       // fillAuxTable()
 			}
 		});
 
@@ -385,44 +388,53 @@ public class ClientSide{
 		//add all of the components to the frame.
 		clientFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		clientCon.add(logout);
+		clientCon.add(save);
 		clientCon.add(optionA);
 		clientCon.add(optionB);
 		clientCon.add(optionC);
 		clientCon.add(optionD);
 		clientCon.add(tableContainer);
-		clientCon.add(tableContainer2);
+		//clientCon.add(tableContainer2); //uncomment to add second table; not for now.
 		
-		//NetworkClient blackMagic=new NetworkClient("192.168.0.100",6066);
-		//try {
-			//localInfo=blackMagic.receiveSuperArray();
-			addTableColumns(4);
-			addTableRows(4);
+		try {
+			//localValues=blackMagic.receiveDoubleArray();
 			
-			//columnNames = new String[] {
-			//		"SYSTEM_ID","SYSTEM_CODE","SYSTEM_NAME","SYSTEM_DESC","EFFECTIVE_DATE","EXPIRY_DATE","CREATED_SYSTEM_ID","CREATED_USER","CREATED_DATE","UPDATED_SYSTEM_ID","UPDATED_USER","UPDATED_DATE"
-			//};
-			columnNames=new String[] { "one","two,","three","four"};
-			changeColumnHeadings(columnNames);
-			setTableTo(columnContents);
-			getFromTable();
-		//} catch (IOException e) {
-		//	// TODO Auto-generated catch block
-		//	e.printStackTrace();
-		//}
+			//columnNames=blackMagic.receiveArray();
+			
+			localValues = new String[][] {
+					{"TestA","TestA2","TestA3","TestA4","TestA","TestA2","TestA3","TestA4","TestA","TestA2","TestA3","TestA4"},
+					{"TestB","TestB2","TestB3","TestB4","TestB","TestB2","TestB3","TestB4","TestB","TestB2","TestB3","TestB4"},
+					{"TestC","TestC2","TestC3","TestC4","TestC","TestC2","TestC3","TestC4","TestC","TestC2","TestC3","TestC4"},
+					{"TestD","TestD2","TestD3","TestD4","TestD","TestD2","TestD3","TestD4","TestD","TestD2","TestD3","TestD4"}
+			};
+			
+			addTableColumns(localValues[0].length);
+			addTableRows(localValues.length);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		columnNames = new String[] {
+				"SYSTEM_ID","SYSTEM_CODE","SYSTEM_NAME","SYSTEM_DESC","EFFECTIVE_DATE","EXPIRY_DATE","CREATED_SYSTEM_ID","CREATED_USER","CREATED_DATE","UPDATED_SYSTEM_ID","UPDATED_USER","UPDATED_DATE"
+		};
+
+		changeColumnHeadings(columnNames);
+		setTableTo(localValues);
 	}
 	
 	/*
 	 * All the methods after this are helper methods for the JTable and whatnot.
 	 */
-	
-	public void doTheThang(){
-		
-	}
-	
 	/**
 	 * public static void resetTable - this method will remove all information from the jtable and reset the row/column count, so the table can be refilled with new information
 	 */
 	public static void resetTable(){
+		
+	}
+	
+	public void saveToDatabase() throws IOException{
+		blackMagic.sendDoubleArray(getFromTable());
 		
 	}
 	
@@ -464,23 +476,13 @@ public class ClientSide{
 		table.getTableHeader().repaint(); //redraw the table so that the headers actually show up
 	}
 	
-	
-	/**
-	 * public static void setLocalValues - this method will take a 3d string from another source, load it into local memory and then into the table.
-	 * @param newLocal
-	 */
-	public static void setLocalValues(String[][][]newLocal){
-		localInfo=newLocal;
-		//setTableTo(localInfo);
-	}
-	
 	/**
 	 * public static void setTableTo - fills the JTable with the given information
 	 * @param toAdd - the 2d array to fill the table with
 	 */
 	public static void setTableTo(String[][]toAdd){
-		for(int i=0;i!=tableModel.getColumnCount();i++){
-			for(int f=0;f!=tableModel.getRowCount();f++){
+		for(int i=0;i!=tableModel.getRowCount();i++){
+			for(int f=0;f!=tableModel.getColumnCount();f++){
 				table.setValueAt(toAdd[i][f], i, f);
 			}
 		}
@@ -492,13 +494,17 @@ public class ClientSide{
 	 * @return localInfo - the 2d string array of all the relevant information
 	 */
 	public String[][] getFromTable(){
-		String[][]toReturn=new String[tableModel.getColumnCount()][tableModel.getRowCount()];
-		for(int i=0;i!=tableModel.getColumnCount();i++){
-			for(int f=0;f!=tableModel.getRowCount();f++){
+		String[][]toReturn=new String[tableModel.getRowCount()][tableModel.getColumnCount()];
+		System.out.println(tableModel.getRowCount());
+		System.out.println(tableModel.getColumnCount());
+		
+		for(int i=0;i!=tableModel.getRowCount();i++){
+			for(int f=0;f!=tableModel.getColumnCount();f++){
+				System.out.println((String) table.getValueAt(i,f));
 				toReturn[i][f]=(String) table.getValueAt(i,f);
 			}
 		}
+	
 		return toReturn;
 	}
-	
 }
