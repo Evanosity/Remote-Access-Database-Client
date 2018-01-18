@@ -119,7 +119,7 @@ public class NetworkClient {
 		
 		for(int i=0;i!=x;i++){
 			for(int f=0;f!=y;f++){
-				send.writeUTF(i+":"+f+":"+toSend[i][f]);
+				send.writeUTF(toSend[i][f]);
 				System.out.println("Sending: "+toSend[i][f]);
 			}
 		}

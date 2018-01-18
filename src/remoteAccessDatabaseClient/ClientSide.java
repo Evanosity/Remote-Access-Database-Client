@@ -217,9 +217,11 @@ public class ClientSide{
 			
 			//tests to see if the server can connect. If not, throws a hissy fit. That's ok though.
 			public void actionPerformed(ActionEvent e) {
-				/*try{
-					blackMagic=new NetworkClient(IPAddress.getText(),Integer.parseInt(port.getText()));
+				try{
+					//blackMagic=new NetworkClient(IPAddress.getText(),Integer.parseInt(port.getText()));
+					blackMagic=new NetworkClient("192.168.0.100",6066);
 					if(blackMagic.isConnected()){
+						System.out.println("Connected!");
 						clientScreen();
 					}
 					else{
@@ -228,8 +230,8 @@ public class ClientSide{
 				}
 				catch(NumberFormatException re){
 					errorPort.setVisible(true);
-				}*/
-				clientScreen();
+				}
+				//clientScreen();
 			}
 			
 		});
@@ -397,16 +399,16 @@ public class ClientSide{
 		//clientCon.add(tableContainer2); //uncomment to add second table; not for now.
 		
 		try {
-			//localValues=blackMagic.receiveDoubleArray();
+			localValues=blackMagic.receiveDoubleArray();
 			
 			//columnNames=blackMagic.receiveArray();
 			
-			localValues = new String[][] {
+			/*localValues = new String[][] {
 					{"TestA","TestA2","TestA3","TestA4","TestA","TestA2","TestA3","TestA4","TestA","TestA2","TestA3","TestA4"},
 					{"TestB","TestB2","TestB3","TestB4","TestB","TestB2","TestB3","TestB4","TestB","TestB2","TestB3","TestB4"},
 					{"TestC","TestC2","TestC3","TestC4","TestC","TestC2","TestC3","TestC4","TestC","TestC2","TestC3","TestC4"},
 					{"TestD","TestD2","TestD3","TestD4","TestD","TestD2","TestD3","TestD4","TestD","TestD2","TestD3","TestD4"}
-			};
+			};*/
 			
 			addTableColumns(localValues[0].length);
 			addTableRows(localValues.length);
