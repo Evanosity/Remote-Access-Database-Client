@@ -218,8 +218,10 @@ public class ClientSide{
 			//tests to see if the server can connect. If not, throws a hissy fit. That's ok though.
 			public void actionPerformed(ActionEvent e) {
 				try{
-					//blackMagic=new NetworkClient(IPAddress.getText(),Integer.parseInt(port.getText()));
-					blackMagic=new NetworkClient("192.168.0.100",6066);
+					blackMagic=new NetworkClient(IPAddress.getText(),Integer.parseInt(port.getText()));
+					System.out.println(IPAddress.getText());
+					System.out.println(Integer.parseInt(port.getText()));
+					//blackMagic=new NetworkClient("192.168.0.100",6066);
 					if(blackMagic.isConnected()){
 						System.out.println("Connected!");
 						clientScreen();
