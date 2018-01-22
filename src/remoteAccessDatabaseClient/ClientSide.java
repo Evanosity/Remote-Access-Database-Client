@@ -14,7 +14,6 @@ import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-//import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -225,6 +224,7 @@ public class ClientSide{
 					if(blackMagic.isConnected()){
 						System.out.println("Connected!");
 						clientScreen();
+						clientLogin.dispose();
 					}
 					else{
 						errorPort.setVisible(true);
